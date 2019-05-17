@@ -118,14 +118,11 @@
             if (this.readyState == 4 && this.status == 200) {
                 priorities = this.responseText;
                 priorities = JSON.parse(priorities);
-
-                console.log( priorities );
-
                 updatePriorities();
-
             }
         };
 
+        // Update html
         function updatePriorities(){
 
             newHTML = '';
