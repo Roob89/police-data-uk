@@ -1,0 +1,73 @@
+---
+title: Police UK API
+layout: default
+---
+
+<!-- Basic Information -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light mt-3 mb-3">
+                <div class="card-body">
+
+                    <h1 id="name">[...]</h1>
+                    <p id="description">[...]</p>
+
+                    <sub>Population</sub>
+                    <p id="population">[...]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Map -->
+<div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card bg-light mt-3 mb-3">
+                    <div class="card-body">
+                        <h2>[ map ]</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+<script>
+
+    // Get data from url
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var force = url.searchParams.get("force");
+    var id = url.searchParams.get("id");
+    var response;
+
+    // Get neighbourhood info
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "https://data.police.uk/api/" + force + "/" + id, true);
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            response = this.responseText;
+            response = JSON.parse(response);
+
+            console.log( response );
+
+            updateBasicDetails();
+
+        }
+    };
+
+    function updateBasicDetails(){
+
+        document.getElementById('name').innerHTML = response.name;
+        document.getElementById('description').innerHTML = response.description;
+        document.getElementById('population').innerHTML = response.population;
+
+    }
+
+
+</script>

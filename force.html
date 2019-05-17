@@ -96,10 +96,11 @@ layout: default
             if( response.length > 0 ) {
                 for (var i = 0; i < response.length; i++) {
                     var obj = response[i];
+                    console.log( obj );
                     newHTML = newHTML + `
                     <div class="col-12 col-md-4">
                         <div class="mt-2 mb-2">
-                            ` + obj.name + `
+                            <a href="/neighbourhood?force=` + id + `&id=` + obj.id + `">` + obj.name + `</a>                            
                         </div>
                     </div>`;
                     }
