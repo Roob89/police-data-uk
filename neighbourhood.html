@@ -1,5 +1,5 @@
 ---
-title: Police UK API
+title: Neighbourhood
 layout: default
 ---
 
@@ -9,12 +9,12 @@ layout: default
         <div class="col">
             <div class="card bg-light mt-3 mb-3">
                 <div class="card-header">
-                    <h1 id="name">[...]</h1>
+                    <h1 id="name">{{site.loadingText}}</h1>
                 </div>
                 <div class="card-body">
-                    <p id="description">[...]</p>
+                    <p id="description">{{site.loadingText}}</p>
                     <h5>Population</h5>
-                    <p id="population">[...]</p>
+                    <p id="population">{{site.loadingText}}</p>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@ layout: default
                     <h2>Priorities (Latest 3)</h2>
                 </div>
                 <div class="card-body">
-                    <div id="priorities">[...]</div>
+                    <div id="priorities">{{site.loadingText}}</div>
                 </div>
             </div>
         </div>
