@@ -27,6 +27,10 @@
                     <p id="url">[ . . . ]</p>
                     <h4>Tel</h4>
                     <p id="telephone">[ . . . ]</p>
+                    <h4>Engagement methods</h4>
+                    <ul id="engagement-methods">
+                        [...]
+                    </ul>
                 </div>
             </div>
         </div>
@@ -42,7 +46,7 @@
                     <h2>Neighbourhoods </h2>
                     <hr>
                     <div id="neighbourhoods-container" class="row">
-                        <p>[ . . . ]</p>
+                        <li>[ . . . ]</li>
                     </div>
                 </div>
             </div>
@@ -66,30 +70,58 @@
 
 <script>
 
-    // Get force ID from url
+    // Get data from url
     var url_string = window.location.href;
     var url = new URL(url_string);
     var id = url.searchParams.get("id");
+    var response;
 
-    // Basic information
+    // API call
     var xhttp = new XMLHttpRequest();
     xhttp.open("GET", "https://data.police.uk/api/forces/" + id, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            var response = this.responseText;
+            response = this.responseText;
             response = JSON.parse(response);
 
             console.log( response );
 
-            // Update DOM
-            document.getElementById('name').innerHTML = response.name;
-            document.getElementById('description').innerHTML = response.description;
-            document.getElementById('url').innerHTML = response.url;
-            document.getElementById('telephone').innerHTML = response.telephone;
+            updateBasicDetails();
+            updateEngagementMethods();
 
         }
     };
+
+    // Update basic details
+    function updateBasicDetails(){
+        
+        document.getElementById('name').innerHTML = response.name;
+        document.getElementById('description').innerHTML = response.description;
+        document.getElementById('url').innerHTML = response.url;
+        document.getElementById('telephone').innerHTML = response.telephone;
+        
+    }
+
+    // Update engagement methods
+    function updateEngagementMethods(){
+
+        engagementMethods = response.engagement_methods;
+        newHTML = '';
+
+        for (var i = 0; i < engagementMethods.length; i++) {
+            var obj = engagementMethods[i];
+            if( obj.url != '' ) {
+                newHTML = newHTML + `<li><a href="${obj.url}" type="${obj.type}" target="_blank" rel="nofollow noreferrer noopener">${obj.title}</a></li>`;
+            } else {
+                newHTML = newHTML + `<li>${obj.title}</li>`;
+            }
+        }
+
+        document.getElementById('engagement-methods').innerHTML = newHTML;
+
+    }
+
 
     // Neighbourhoods
     var xhttp = new XMLHttpRequest();
@@ -107,7 +139,6 @@
             if( response.length > 0 ) {
                 for (var i = 0; i < response.length; i++) {
                     var obj = response[i];
-                    console.log( obj );
                     newHTML = newHTML + `
                     <div class="col-12 col-md-4">
                         <div class="mt-2 mb-2">
