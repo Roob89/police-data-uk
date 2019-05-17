@@ -19,13 +19,29 @@
     <div class="row">
         <div class="col">
             <div class="card bg-light mt-3 mb-3">
-                <div class="card-body">
-
+                <div class="card-header">
                     <h1 id="name">[...]</h1>
+                </div>
+                <div class="card-body">
                     <p id="description">[...]</p>
-
-                    <sub>Population</sub>
+                    <h5>Population</h5>
                     <p id="population">[...]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Priorities -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light mt-3 mb-3">
+                <div class="card-header">
+                    <h2>Priorities (Latest 3)</h2>
+                </div>
+                <div class="card-body">
+                    <div id="priorities">[...]</div>
                 </div>
             </div>
         </div>
@@ -34,16 +50,19 @@
 
 <!-- Map -->
 <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="card bg-light mt-3 mb-3">
-                    <div class="card-body">
-                        <h2>[ map ]</h2>
-                    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light mt-3 mb-3">
+                <div class="card-header">
+                    <h2>Map</h2>
+                </div>
+                <div class="card-body">
+                    <p>[ coming soon ]</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
     
 
 
@@ -68,15 +87,59 @@
             console.log( response );
 
             updateBasicDetails();
+            getPriorities()
 
         }
     };
 
+
+
+    // Basic details
     function updateBasicDetails(){
 
         document.getElementById('name').innerHTML = response.name;
         document.getElementById('description').innerHTML = response.description;
         document.getElementById('population').innerHTML = response.population;
+
+    }
+
+
+    // Priorities
+    function getPriorities(){
+
+        // Variables
+        var priorities;
+
+        // API call
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "https://data.police.uk/api/" + force + "/" + id + "/priorities", true);
+        xhttp.send();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                priorities = this.responseText;
+                priorities = JSON.parse(priorities);
+
+                console.log( priorities );
+
+                updatePriorities();
+
+            }
+        };
+
+        function updatePriorities(){
+
+            newHTML = '';
+            for (var i = 0; i < priorities.length && i < 3 ; i++) {
+                var obj = priorities[i];
+                if( i != 0 ) {
+                    newHTML = newHTML + '<hr>';
+                }
+                newHTML = newHTML + `<strong>Issue</strong><br>${obj.issue}<strong>Action</strong><br>${obj.action}`;
+            }
+            document.getElementById('priorities').innerHTML = newHTML;
+
+        }
+
 
     }
 

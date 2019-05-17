@@ -8,9 +8,10 @@ layout: default
     <div class="row">
         <div class="col">
             <div class="card bg-light mt-3 mb-3">
-                <div class="card-body">
+                <div class="card-header">
                     <h1 id="name">[ . . . ]</h1>
-                    <hr>
+                </div>
+                <div class="card-body">
                     <p id="description">[ . . . ]</p>
                     <h4>URL</h4>
                     <p id="url">[ . . . ]</p>
@@ -31,9 +32,10 @@ layout: default
     <div class="row">
         <div class="col">
             <div class="card bg-light mt-3 mb-3">
-                <div class="card-body">
+                <div class="card-header">
                     <h2>Neighbourhoods </h2>
-                    <hr>
+                </div>
+                <div class="card-body">
                     <div id="neighbourhoods-container" class="row">
                         <li>[ . . . ]</li>
                     </div>
@@ -48,8 +50,10 @@ layout: default
     <div class="row">
         <div class="col">
             <div class="card bg-light mt-3 mb-3">
-                <div class="card-body">
+                <div class="card-header">
                     <h2>Senior officers</h2>
+                </div>
+                <div class="card-body">
                     <div id="senior-officer-container">[ . . . ]</div>
                 </div>
             </div>
@@ -97,7 +101,6 @@ layout: default
 
         engagementMethods = response.engagement_methods;
         newHTML = '';
-
         for (var i = 0; i < engagementMethods.length; i++) {
             var obj = engagementMethods[i];
             if( obj.url != '' ) {
@@ -106,7 +109,6 @@ layout: default
                 newHTML = newHTML + `<li>${obj.title}</li>`;
             }
         }
-
         document.getElementById('engagement-methods').innerHTML = newHTML;
 
     }
