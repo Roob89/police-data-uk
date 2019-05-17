@@ -1,0 +1,53 @@
+---
+title: Police UK API
+layout: default
+---
+
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <div class="col">
+            <h1>List of forces</h1>
+        </div>
+    </div>
+    <hr>
+    <div id="region-container" class="row text-center">
+        <div class="col">
+            <p>[ . . . ]</p>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // API request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "https://data.police.uk/api/forces", true);
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = this.responseText;
+            response = JSON.parse(response);
+            updateDOM(response);
+        }
+    };
+
+    // Amend DOM
+    function updateDOM( data ) {
+
+        var regionContainerElement = document.getElementById('region-container');
+        var newHTML = '';
+
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i];
+            newHTML = newHTML + `
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="mt-3 mb-3">
+                    <a href="/force?id=` + obj.id + `">` + obj.name + `</a>
+                </div>
+            </div>`;
+        }
+
+        regionContainerElement.innerHTML = newHTML;
+    }
+
+</script>

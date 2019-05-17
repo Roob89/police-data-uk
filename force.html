@@ -1,0 +1,162 @@
+---
+title: Police UK API
+layout: default
+---
+
+<!-- Basic Information -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light mt-3 mb-3">
+                <div class="card-body">
+                    <h1 id="name">[ . . . ]</h1>
+                    <hr>
+                    <p id="description">[ . . . ]</p>
+                    <h4>URL</h4>
+                    <p id="url">[ . . . ]</p>
+                    <h4>Tel</h4>
+                    <p id="telephone">[ . . . ]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Neighbourhoods  -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light mt-3 mb-3">
+                <div class="card-body">
+                    <h2>Neighbourhoods </h2>
+                    <hr>
+                    <div id="neighbourhoods-container" class="row">
+                        <p>[ . . . ]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Senior officers -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light mt-3 mb-3">
+                <div class="card-body">
+                    <h2>Senior officers</h2>
+                    <div id="senior-officer-container">[ . . . ]</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // Get force ID from url
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+
+    // Basic information
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "https://data.police.uk/api/forces/" + id, true);
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = this.responseText;
+            response = JSON.parse(response);
+
+            // Update DOM
+            document.getElementById('name').innerHTML = response.name;
+            document.getElementById('description').innerHTML = response.description;
+            document.getElementById('url').innerHTML = response.url;
+            document.getElementById('telephone').innerHTML = response.telephone;
+
+        }
+    };
+
+    // Neighbourhoods
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "https://data.police.uk/api/"+id+'/neighbourhoods', true);
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+            // Parse the response
+            var response = this.responseText;
+            response = JSON.parse(response);
+            
+            // Loop
+            newHTML = '';
+            if( response.length > 0 ) {
+                for (var i = 0; i < response.length; i++) {
+                    var obj = response[i];
+                    newHTML = newHTML + `
+                    <div class="col-12 col-md-4">
+                        <div class="mt-3 mb-3">
+                            ` + obj.name + `
+                        </div>
+                    </div>`;
+                    }
+                }
+                
+                // Update DOM
+                document.getElementById('neighbourhoods-container').innerHTML = newHTML;
+            
+        }
+    }
+
+    // Senior Officer API request
+    var xhttp = new XMLHttpRequest();
+    var response = null;
+    xhttp.open("GET", "https://data.police.uk/api/forces/"+id+'/people', true);
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+            // Parse response
+            response = this.responseText;
+            response = JSON.parse(response);
+
+            // Loop through the results
+            var newHTML = '';
+            if( response.length > 0 ) {
+
+                // Generate new html
+                for (var i = 0; i < response.length; i++) {
+
+                    // Variables
+                    var obj = response[i];
+
+                    // Basic details
+                    newHTML = newHTML + `
+                        <hr>
+                        <h2>` + obj.name + `</h2>
+                        <sub>` + obj.rank + `</sub>
+                        <p>` + obj.bio + `</p>
+                    `;
+
+                    // Contact
+                    if( obj.contact_details.twitter != '' ) {
+                        newHTML = newHTML + `<a href="` + obj.contact_details.twitter + `" target="_blank" rel="nofollow noreferrer">` + obj.contact_details.twitter + `</a>`;
+                    }
+
+                }
+
+            } else {
+
+                // No senior officer details
+                newHTML = '<p>No data available at this moment.</p>'
+
+            }
+
+            // Update DOM
+            document.getElementById('senior-officer-container').innerHTML = newHTML;
+
+        }
+    };
+
+</script>
