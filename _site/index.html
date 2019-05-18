@@ -9,7 +9,6 @@
     
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
 
 
@@ -17,19 +16,27 @@
 
 <body>
 
-    <div class="container mt-3 mb-3">
-    <div class="row">
-        <div class="col">
-            <h1>List of forces</h1>
+    <section id="introduction">
+    <div class="container inner-margin">
+        <div class="card">
+            <h2>Welcome to the Police Data UK API browser.</h2>
+            <p>All data found on this website is publicly available from the data.police.uk website, and is updated / maintained by them.  This website just displays it in a more readable format.</p>
+            <p>Feel free to have a browse around, the API shows data such as details about each force, which neighbourhoods they cover, and information about each neighbourhood. I plan to add crime data soon.</p>
         </div>
     </div>
-    <hr>
-    <div id="region-container" class="row text-center">
-        <div class="col">
-            <p>[ . . . ]</p>
+</section>
+
+<section id="forces">
+    <div class="container">
+        <div class="card">
+            <h1>The big list of forces</h1>
+            <p>Here is a list of all the forces provided by the API, click on one for more information.</p>
+            <div id="region-container" class="region-container">
+                
+            </div>
         </div>
     </div>
-</div>
+</section>
 
 <script>
 
@@ -54,10 +61,8 @@
         for (var i = 0; i < data.length; i++) {
             var obj = data[i];
             newHTML = newHTML + `
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="mt-2 mb-2">
-                    <a href="/force?id=` + obj.id + `">` + obj.name + `</a>
-                </div>
+            <div class="region-container__col">
+                <a class="region-container__item" href="/force?id=` + obj.id + `">` + obj.name + `</a>
             </div>`;
         }
 
