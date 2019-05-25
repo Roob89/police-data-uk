@@ -27,37 +27,60 @@
     </header>
 
     <!-- Basic Information -->
-<div class="container inner-margin">
-    <div class="card">
-        <h1 id="name">[ . . . ]</h1>
-        <p id="description">[ . . . ]</p>
-        <h4>URL</h4>
-        <p id="url">[ . . . ]</p>
-        <h4>Tel</h4>
-        <p id="telephone">[ . . . ]</p>
-        <h4>Engagement methods</h4>
-        <ul id="engagement-methods">
-            [...]
-        </ul>
-    </div>
-</div>
+<section class="basic_information">
+    <div class="container inner-margin">
+        <div class="basic-information__row">
 
-<!-- Neighbourhoods  -->
-<div class="container inner-margin">
-    <div class="card">
-        <h2>Neighbourhoods </h2>
-        <div id="neighbourhoods-container" class="row">
-            <li>[ . . . ]</li>
+            <!-- Description and contact -->
+            <div class="basic-information__col basic-information__col--left">
+                <div class="basic-information__col-inner card">
+                    <h1 id="name">[ . . . ]</h1>
+                    <p id="description">[ . . . ]</p>
+                    <div class="basic-information__contact">
+                        <div class="basic-information__contact-item">
+                            <h4 class="basic-information__contact-title">Telephone</h4>
+                            <span id="telephone">[ . . . ]</span>
+                        </div>
+                        <div class="basic-information__contact-item">
+                            <h4 class="basic-information__contact-title">Website</h4>
+                            <span id="url">[ . . . ]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Engagement methods -->
+            <div class="basic-information__col basic-information__col--right">
+                <div class="basic-information__col-inner card">
+                    <h2>Engagement methods</h2>
+                    <div id="engagement-methods" class="engagement-methods">
+                        [...]
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-</div>
+</section>
+
+<!-- Neighbourhoods  -->
+<section class="neighbourhoods">
+    <div class="container inner-margin">
+        <div class="card">
+            <h2>Neighbourhoods </h2>
+            <div id="neighbourhoods-container" class="neighbourhoods__row">
+                [...]
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Senior officers -->
 <div class="container inner-margin">
     <div class="card">
         <h2>Senior officers</h2>
         <div class="card-body">
-            <div id="senior-officer-container">[ . . . ]</div>
+            <div id="senior-officer-container">[...]</div>
         </div>
     </div>
 </div>
@@ -92,9 +115,9 @@
     function updateBasicDetails(){
         
         document.getElementById('name').innerHTML = response.name;
-        document.getElementById('description').innerHTML = response.description;
-        document.getElementById('url').innerHTML = response.url;
-        document.getElementById('telephone').innerHTML = response.telephone;
+        document.getElementById('description').innerHTML = (response.description) ? response.description : 'No description available.';
+        document.getElementById('url').innerHTML = (response.url) ? `<a href="${response.url}" target="_blank" rel="noopener nofollow noreferrer">${response.url}</a>` : 'No URL given.';
+        document.getElementById('telephone').innerHTML = (response.telephone) ? response.telephone : 'No telephone given.';
         
     }
 
@@ -106,9 +129,9 @@
         for (var i = 0; i < engagementMethods.length; i++) {
             var obj = engagementMethods[i];
             if( obj.url != '' ) {
-                newHTML = newHTML + `<li><a href="${obj.url}" type="${obj.type}" target="_blank" rel="nofollow noreferrer noopener">${obj.title}</a></li>`;
+                newHTML = newHTML + `<h3 class="engagement-methods__title">${obj.title}</h3><a href="${obj.url}" type="${obj.type}" target="_blank" rel="nofollow noreferrer noopener">${obj.url}</a>`;
             } else {
-                newHTML = newHTML + `<li>${obj.title}</li>`;
+                newHTML = newHTML + `<h3>${obj.title}</h3>`;
             }
         }
         document.getElementById('engagement-methods').innerHTML = newHTML;
@@ -132,12 +155,7 @@
             if( response.length > 0 ) {
                 for (var i = 0; i < response.length; i++) {
                     var obj = response[i];
-                    newHTML = newHTML + `
-                    <div class="col-12 col-md-4">
-                        <div class="mt-2 mb-2">
-                            <a href="/neighbourhood?force=` + id + `&id=` + obj.id + `">` + obj.name + `</a>                            
-                        </div>
-                    </div>`;
+                    newHTML = newHTML + `<div class="neighbourhoods__col"><a class="neighbourhoods__item" href="/neighbourhood?force=${id}&id=${obj.id}">${obj.name}</a></div>`;
                     }
                 }
                 
@@ -168,17 +186,18 @@
 
                     // Variables
                     var obj = response[i];
+                    obj.bio = (obj.bio) ? obj.bio : 'No bio found.';
 
                     // Basic details
                     newHTML = newHTML + `
                         <hr>
-                        <h2>` + obj.name + `</h2>
+                        <h3 class="header--no-bottom">` + obj.name + `</h3>
                         <sub>` + obj.rank + `</sub>
                         <p>` + obj.bio + `</p>
                     `;
 
                     // Contact
-                    if( obj.contact_details.twitter != '' ) {
+                    if( obj.contact_details.twitter ) {
                         newHTML = newHTML + `<a href="` + obj.contact_details.twitter + `" target="_blank" rel="nofollow noreferrer">` + obj.contact_details.twitter + `</a>`;
                     }
 
