@@ -67,6 +67,15 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 .engagement-methods { margin-top: 2em; }
 .engagement-methods__title { margin-bottom: 0; }
 
+
+.senior-officers__row {display: flex;margin: 0 -20px;align-items: flex-start;}
+.senior-officers__container { padding: 0 20px; width: 320px; }
+.senior-officers__details { background: whitesmoke; flex: 1; margin: 20px; padding: 20px 40px; }
+.senior-officers__item {background: whitesmoke;padding: 11px 20px;margin: 20px 0;line-height: 1.2;cursor: pointer;}
+.senior-officers__item--active {background: #1a4080;color: white;cursor: not-allowed;}
+.senior-officers__item-name { font-size: 1.25em; }
+.senior-officers__item-rank { font-size: 0.75em; text-transform: uppercase; font-weight: bold; opacity: .5; }
+
 .neighbourhoods__row { display: flex; flex-flow: wrap; margin: 0 -10px; }
 .neighbourhoods__col { width: 25%; padding: 10px; }
 .neighbourhoods__item {background: whitesmoke;text-align: center;color: inherit;text-decoration: none;display: block;padding: 1em;font-weight: bold;}

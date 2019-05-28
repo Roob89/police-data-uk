@@ -40,6 +40,46 @@ layout: default
     </div>
 </section>
 
+<!-- Senior officers -->
+<div class="container inner-margin">
+    <div class="card">
+        <h2>Senior officers</h2>
+        <div id="SO-wrapper" class="card-body">
+
+            <!-- Row -->
+            <div class="senior-officers__row">
+
+                <!-- Names -->
+                <div id="SO-container" class="senior-officers__container">
+                    <div class="senior-officers__item">
+                        {{site.loadingText}}
+                    </div>
+                </div>
+    
+                <!-- Details -->
+                <div id="SO-details" class="senior-officers__details">
+                    {{site.loadingText}}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Map -->
+<section id="map">
+    <div class="container inner-margin">
+        <div class="card">
+            <h2>Map</h2>
+            <p>The area covered by this force.</p>
+            <p>{{site.loadingText}}</p>
+        </div>
+    </div>
+</section>
+
+
 <!-- Neighbourhoods  -->
 <section class="neighbourhoods">
     <div class="container inner-margin">
@@ -51,16 +91,6 @@ layout: default
         </div>
     </div>
 </section>
-
-<!-- Senior officers -->
-<div class="container inner-margin">
-    <div class="card">
-        <h2>Senior officers</h2>
-        <div class="card-body">
-            <div id="senior-officer-container">{{site.loadingText}}</div>
-        </div>
-    </div>
-</div>
 
 
 <script>
@@ -152,45 +182,67 @@ layout: default
 
             // Parse response
             response = this.responseText;
-            response = JSON.parse(response);
+            seniorOfficers = JSON.parse(response);
+            console.log( seniorOfficers );
 
             // Loop through the results
             var newHTML = '';
-            if( response.length > 0 ) {
+            if( seniorOfficers.length > 0 ) {
 
                 // Generate new html
-                for (var i = 0; i < response.length; i++) {
+                for (var i = 0; i < seniorOfficers.length; i++) {
 
                     // Variables
-                    var obj = response[i];
+                    var obj = seniorOfficers[i];
                     obj.bio = (obj.bio) ? obj.bio : 'No bio found.';
+                    var additionalClass = (i == 0) ? 'senior-officers__item--active' : '';
 
                     // Basic details
                     newHTML = newHTML + `
-                        <hr>
-                        <h3 class="header--no-bottom">` + obj.name + `</h3>
-                        <sub>` + obj.rank + `</sub>
-                        <p>` + obj.bio + `</p>
+                        <div class="senior-officers__item ${ additionalClass }" data-id="${i}" onclick="selectSeniorOfficer(${i});">
+                            <div class="senior-officers__item-name">${obj.name}</div>
+                            <div class="senior-officers__item-rank">${obj.rank}</div>
+                        </div>
                     `;
 
-                    // Contact
-                    if( obj.contact_details.twitter ) {
-                        newHTML = newHTML + `<a href="` + obj.contact_details.twitter + `" target="_blank" rel="nofollow noreferrer">` + obj.contact_details.twitter + `</a>`;
-                    }
-
                 }
+
+                selectSeniorOfficer( 0 );
+
+                // Update DOM
+                document.getElementById('SO-container').innerHTML = newHTML;
 
             } else {
 
                 // No senior officer details
                 newHTML = '<p>No data available at this moment.</p>'
 
+                // Update DOM
+                document.getElementById('SO-wrapper').innerHTML = newHTML;
             }
 
-            // Update DOM
-            document.getElementById('senior-officer-container').innerHTML = newHTML;
 
         }
     };
+
+    function selectSeniorOfficer( id ){
+
+        // Update classes on items
+        var items = document.getElementsByClassName("senior-officers__item");
+        for(var i = 0; i < items.length; i++)
+        {
+            thisItem = items[i];
+            thisItem.classList.remove('senior-officers__item--active');
+            if( thisItem.dataset.id == id ) {
+                thisItem.classList.add('senior-officers__item--active');
+            }
+        }
+
+        // Update HTML
+        document.getElementById('SO-details').innerHTML = `
+            <h3>${seniorOfficers[id].name}, ${seniorOfficers[id].rank}</h3>
+            ${seniorOfficers[id].bio}
+        `;
+    }
 
 </script>
