@@ -47,12 +47,12 @@
 <!-- Map -->
 <div class="container inner-margin">
     <div class="card">
-            <h2>Map</h2>
-            <p>[ coming soon ]</p>
+        <h2>Map</h2>
+        <div id="map">[...]</div>
     </div>
 </div>
     
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMszAF0n5kmL66f7fz7yFrZrqmiuhqpiw"></script>
 
 <script>
 
@@ -81,7 +81,6 @@
     };
 
 
-
     // Basic details
     function updateBasicDetails(){
 
@@ -107,6 +106,7 @@
                 priorities = this.responseText;
                 priorities = JSON.parse(priorities);
                 updatePriorities();
+                initMap();
             }
         };
 
@@ -125,11 +125,65 @@
 
         }
 
+    }
+
+
+    // Neightbourhood boundary
+    function boundary(){
+
+        var boundary;
+
+        // API call
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "https://data.police.uk/api/" + force + "/" + id + "/boundary", true);
+        xhttp.send();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                boundary = this.responseText;
+                boundary = JSON.parse(boundary);
+                
+                console.log( boundary );
+
+                var neighbourhoodBoundary = new google.maps.Polygon({
+                    paths: boundary,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35
+                });
+                neighbourhoodBoundary.setMap(map);
+
+            }
+        };
+
 
     }
 
 
+    // Map
+    var map;
+    function initMap() {
+
+        // Variables
+        var lat = parseFloat( response.centre.latitude );
+        var lng = parseFloat( response.centre.longitude );
+
+        // Basic map
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: lat, lng: lng },
+            zoom: 10
+        });
+
+        // Boundary
+        boundary();
+
+        var marker = new google.maps.Marker({position: {lat: lat, lng: lng }, map: map});
+    }
+
 </script>
+
+
 
     <!-- Scripts -->
     <script src=""></script>

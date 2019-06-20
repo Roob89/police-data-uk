@@ -32,6 +32,8 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 
 .background--primary { background: #1B4080; color: white; }
 
+#map { height: 500px; }
+
 
 /***************************************************************
 # Header
@@ -39,6 +41,7 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 .header { padding: 10px 0; }
 .header__row { display: flex; justify-content: space-between; }
 .header a { color: inherit; text-decoration: none; }
+
 
 /***************************************************************
 # Home
