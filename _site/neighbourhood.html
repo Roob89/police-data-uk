@@ -48,7 +48,7 @@
 <div class="container inner-margin">
     <div class="card">
         <h2>Map</h2>
-        <div id="map">[...]</div>
+        <div id="map-container">[...]</div>
     </div>
 </div>
     
@@ -139,13 +139,20 @@
         xhttp.send();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+
+                // Parse response
                 boundary = this.responseText;
                 boundary = JSON.parse(boundary);
-                
-                console.log( boundary );
 
+                // Make array
+                var boundaryArray = [];
+                for (var i = 0; i < boundary.length; i++) {
+                    boundaryArray.push( { lat: parseFloat(boundary[i].latitude), lng: parseFloat(boundary[i].longitude) } );
+                }
+
+                // Draw polygon
                 var neighbourhoodBoundary = new google.maps.Polygon({
-                    paths: boundary,
+                    paths: boundaryArray,
                     strokeColor: '#FF0000',
                     strokeOpacity: 0.8,
                     strokeWeight: 3,
@@ -170,9 +177,9 @@
         var lng = parseFloat( response.centre.longitude );
 
         // Basic map
-        map = new google.maps.Map(document.getElementById('map'), {
+        map = new google.maps.Map(document.getElementById('map-container'), {
             center: {lat: lat, lng: lng },
-            zoom: 10
+            zoom: 12
         });
 
         // Boundary
