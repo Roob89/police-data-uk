@@ -118,7 +118,7 @@ layout: default
             if (this.readyState == 4 && this.status == 200) {
                 boundary = this.responseText;
                 boundary = JSON.parse(boundary);
-                
+                    
                 console.log( boundary );
 
                 var neighbourhoodBoundary = new google.maps.Polygon({
