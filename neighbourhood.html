@@ -62,8 +62,8 @@ layout: default
     function updateBasicDetails(){
 
         document.getElementById('name').innerHTML = response.name;
-        document.getElementById('description').innerHTML = response.description;
-        document.getElementById('population').innerHTML = response.population;
+        document.getElementById('description').innerHTML = (response.description) ? response.description : 'No description available.';
+        document.getElementById('population').innerHTML = (response.population) ? response.population : 'No data available.';
 
     }
 
@@ -91,13 +91,25 @@ layout: default
         function updatePriorities(){
 
             newHTML = '';
-            for (var i = 0; i < priorities.length && i < 3 ; i++) {
-                var obj = priorities[i];
-                if( i != 0 ) {
-                    newHTML = newHTML + '<hr>';
+            if( priorities.length > 0 ) {
+
+                // Has priorities    
+                for (var i = 0; i < priorities.length && i < 3 ; i++) {
+                    var obj = priorities[i];
+                    if( i != 0 ) {
+                        newHTML = newHTML + '<hr>';
+                    }
+                    newHTML = newHTML + `<strong>Issue</strong><br>${obj.issue}<strong>Action</strong><br>${obj.action}`;
                 }
-                newHTML = newHTML + `<strong>Issue</strong><br>${obj.issue}<strong>Action</strong><br>${obj.action}`;
+
+            } else {
+
+                // No priorities    
+                newHTML = `No data given.`;
+
             }
+
+            // Update HTML
             document.getElementById('priorities').innerHTML = newHTML;
 
         }
