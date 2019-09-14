@@ -147,7 +147,7 @@
         document.getElementById('name').innerHTML = response.name;
         document.getElementById('description').innerHTML = (response.description) ? response.description : 'No description available.';
         document.getElementById('url').innerHTML = (response.url) ? `<a href="${response.url}" target="_blank" rel="noopener nofollow noreferrer">${response.url}</a>` : 'No URL given.';
-        document.getElementById('telephone').innerHTML = (response.telephone) ? response.telephone : 'No telephone given.';
+        document.getElementById('telephone').innerHTML = (response.telephone != "") ? response.telephone : 'No telephone given.';
         
     }
 
