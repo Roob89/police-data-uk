@@ -162,7 +162,7 @@ layout: default
             if( response.length > 0 ) {
                 for (var i = 0; i < response.length; i++) {
                     var obj = response[i];
-                    newHTML = newHTML + `<div class="neighbourhoods__col"><a class="neighbourhoods__item" href="/neighbourhood?force=${id}&id=${obj.id}">${obj.name}</a></div>`;
+                    newHTML = newHTML + `<div class="neighbourhoods__col"><a class="neighbourhoods__item" href="neighbourhood?force=${id}&id=${obj.id}">${obj.name}</a></div>`;
                     }
                 }
                 
