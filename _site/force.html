@@ -63,6 +63,7 @@
     </div>
 </section>
 
+
 <!-- Senior officers -->
 <div class="container inner-margin">
     <div class="card">
@@ -90,12 +91,13 @@
     </div>
 </div>
 
+
 <!-- Neighbourhoods  -->
 <section class="neighbourhoods">
     <div class="container inner-margin">
         <div class="card">
             <h2>Neighbourhoods </h2>
-            <div id="neighbourhoods-container" class="neighbourhoods__row">
+            <div id="neighbourhoods-container" class="grid grid--3">
                 [...]
             </div>
         </div>
@@ -172,7 +174,7 @@
             if( response.length > 0 ) {
                 for (var i = 0; i < response.length; i++) {
                     var obj = response[i];
-                    newHTML = newHTML + `<div class="neighbourhoods__col"><a class="neighbourhoods__item" href="neighbourhood?force=${id}&id=${obj.id}">${obj.name}</a></div>`;
+                    newHTML = newHTML + `<a class="neighbourhoods__item" href="neighbourhood?force=${id}&id=${obj.id}">${obj.name}</a>`;
                     }
                 }
                 

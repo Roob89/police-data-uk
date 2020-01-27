@@ -1,8 +1,8 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
 /***************************************************************
 # Tags
 ***************************************************************/
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 h1,h2,h3,h4,h5,p,ol,ul { margin: 1rem 0; }
 
@@ -13,7 +13,6 @@ h2 { font-size: 34px; }
 h3 { font-size: 24px; }
 h4 { font-size: 20px; }
 h5 { font-size: 16px; }
-
 
 ul { padding-left: 2em; }
 
@@ -34,6 +33,9 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 
 #map-container { height: 500px; }
 
+.grid { display: grid; grid-gap: 1rem; grid-template-columns: repeat(4, auto); }
+.grid--3 { grid-template-columns: repeat(3, auto); }
+
 
 /***************************************************************
 # Header
@@ -47,8 +49,7 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 # Home
 ***************************************************************/
 
-.region-container { display: flex; flex-flow: wrap; margin: 0 -10px; }
-.region-container__col { width: 25%; padding: 10px; }
+.region-container {}
 .region-container__item {background: whitesmoke;text-align: center;color: inherit;text-decoration: none;display: block;padding: 1em;font-weight: bold;}
 
 
@@ -79,6 +80,35 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 .senior-officers__item-name { font-size: 1.25em; }
 .senior-officers__item-rank { font-size: 0.75em; text-transform: uppercase; font-weight: bold; opacity: .5; }
 
-.neighbourhoods__row { display: flex; flex-flow: wrap; margin: 0 -10px; }
-.neighbourhoods__col { width: 25%; padding: 10px; }
 .neighbourhoods__item {background: whitesmoke;text-align: center;color: inherit;text-decoration: none;display: block;padding: 1em;font-weight: bold;}
+
+
+
+/***************************************************************
+# Responsive
+***************************************************************/
+
+@media (max-width: 1199.98px) {
+
+    /* Common */
+    .grid { grid-template-columns: repeat(3, auto); }
+    .grid--3 { grid-template-columns: repeat(2, auto); }
+
+}
+
+@media (max-width: 991.98px) {
+
+    /* Common */
+    .grid { grid-template-columns: repeat(2, auto); }
+    .grid--3 { grid-template-columns: repeat(1, auto); }
+
+}
+
+@media (max-width: 767.98px) {
+
+    /* Common */
+    .grid { grid-template-columns: repeat(1, auto); }
+
+}
+
+@media (max-width: 575.98px) {}

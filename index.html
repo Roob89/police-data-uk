@@ -14,11 +14,11 @@ layout: default
 </section>
 
 <section id="forces">
-    <div class="container">
+    <div class="container inner-margin">
         <div class="card">
             <h1>The big list of forces</h1>
             <p>Here is a list of all the forces provided by the API, click on one for more information.</p>
-            <div id="region-container" class="region-container">
+            <div id="region-container" class="region-container grid">
                 {{loadingText}}
             </div>
         </div>
@@ -47,10 +47,7 @@ layout: default
 
         for (var i = 0; i < data.length; i++) {
             var obj = data[i];
-            newHTML = newHTML + `
-            <div class="region-container__col">
-                <a class="region-container__item" href="force?id=` + obj.id + `">` + obj.name + `</a>
-            </div>`;
+            newHTML = newHTML + `<a class="region-container__item" href="force?id=` + obj.id + `">` + obj.name + `</a>`;
         }
 
         regionContainerElement.innerHTML = newHTML;
