@@ -125,9 +125,9 @@ layout: default
         for (var i = 0; i < engagementMethods.length; i++) {
             var obj = engagementMethods[i];
             if( obj.url != '' ) {
-                newHTML = newHTML + `<h3 class="engagement-methods__title">${obj.title}</h3><a href="${obj.url}" type="${obj.type}" target="_blank" rel="nofollow noreferrer noopener">${obj.url}</a>`;
+                newHTML = newHTML + `<h3 class="engagement-methods__title">${obj.title}</h3>${obj.description}<a href="${obj.url}" type="${obj.type}" target="_blank" rel="nofollow noreferrer noopener">${obj.url}</a>`;
             } else {
-                newHTML = newHTML + `<h3>${obj.title}</h3>`;
+                newHTML = newHTML + `<h3>${obj.title}</h3>${obj.description}`;
             }
         }
         document.getElementById('engagement-methods').innerHTML = newHTML;
