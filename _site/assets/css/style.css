@@ -36,6 +36,10 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 .grid { display: grid; grid-gap: 1rem; grid-template-columns: repeat(4, auto); }
 .grid--3 { grid-template-columns: repeat(3, auto); }
 
+.map { padding: 25% 0; }
+
+.button { display: inline-block; background: #1a4080; color: white; font-weight: bold; padding: 1em 2em; line-height: 1; cursor: pointer; text-decoration: none; }
+
 
 /***************************************************************
 # Header
@@ -82,6 +86,13 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 
 .neighbourhoods__item {background: whitesmoke;text-align: center;color: inherit;text-decoration: none;display: block;padding: 1em;font-weight: bold;}
 
+
+
+/***************************************************************
+# Crime map
+***************************************************************/
+
+#found { margin-left: 1rem; }
 
 
 /***************************************************************

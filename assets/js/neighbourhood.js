@@ -5,6 +5,7 @@ var force = url.searchParams.get("force");
 var id = url.searchParams.get("id");
 var response;
 
+
 // Get neighbourhood info
 var xhttp = new XMLHttpRequest();
 xhttp.open("GET", "https://data.police.uk/api/" + force + "/" + id, true);
@@ -146,6 +147,7 @@ function initMap() {
     // Boundary
     boundary();
 
+    // Add marker
     var marker = new google.maps.Marker({
         position: {
             lat: lat,

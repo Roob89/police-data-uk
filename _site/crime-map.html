@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Crime Map - Police UK API</title>
+    
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+
+<body>
+
+    <header class="header background--primary">
+        <div class="container container--wide header__row">
+            <div class="header__left">
+                <a href="http://localhost:4000">Police Data UK API browser</a>
+            </div>
+            <div class="header__right">
+                <a href="https://roob.dev" target="_blank" rel="nofollow noreferrer noopener">roob.dev</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Basic Information -->
+<section class="basic_information">
+    <div class="container inner-margin">
+        <div class="card">
+            <h1>Crime Map</h1>
+            <p>Click on the button below the map to view all crimes within a 1 mile radius that happened in the last month.</p>
+            <p>The street-level crimes returned in the API are only an approximation of where the actual crimes occurred, they are not the exact locations. See the <a href="https://data.police.uk/about/#location-anonymisation" target="_blank" rel="noreferrer nofollow noopener">about page</a> for more information about location anonymisation. If you're searching for locations in Scotland, please be aware that since only the British Transport Police provide data for Scotland, crime levels may appear much lower than they really are.</p>
+            <div id="map" class="map"></div>
+            <p><span id="find-crimes-button" class="button">Find recent crimes</span><span id="found"></span></p>
+        </div>
+    </div>
+</section>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmI6yNMDIlLJSV_DaP5zAc-h4WpDVsFgY"></script>
+<script src="http://localhost:4000/assets/js/crime-map.js"></script>
+
+</body>
+
+</html>
