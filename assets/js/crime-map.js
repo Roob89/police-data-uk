@@ -100,7 +100,7 @@ function findCrimes() {
             response = JSON.parse(response);
             document.getElementById('found').innerHTML = `Found ${response.length} crimes`;
 
-            console.log(response);
+            console.log( response );
 
             for (var i = 0; i < response.length; i++) {
 
@@ -111,20 +111,30 @@ function findCrimes() {
                     lng: parseFloat(crime.location.longitude)
                 }
 
+                // Get icon
+                markerIcon = chooseIcon(crime.category);
+
                 // Add markers
                 var marker = new google.maps.Marker({
                     position: crimeLocation,
                     map: map,
+                    icon: `../assets/icons/${markerIcon}.png`
                 });
+
+                // Set info
+                marker.crimeID = crime.id;
+                marker.crimeCategory = crime.category;
+                marker.crimeLocation = crime.location.street.name;
+                marker.crimeMonth = crime.month;
+
 
                 // Event listener
                 google.maps.event.addListener(marker, 'click', function () {
                     infoWindow.setContent(`
-                    <strong>ID:${crime.id}</strong><br>
-                    Category: ${crime.category}<br>
-                    Location: ${crime.location.street.name}<br>
-                    Month: ${crime.month}<br>
-                    Outcome: ${crime.outcome_status.category}
+                    <strong>ID:${this.crimeID}</strong><br>
+                    Category: ${this.crimeCategory}<br>
+                    Location: ${this.crimeLocation}<br>
+                    Month: ${this.crimeMonth}<br>
                     `);
                     infoWindow.open(map, this);
                 });
@@ -157,4 +167,39 @@ function clearMarkers() {
     } else {
         console.log('No markers to clear');
     }
+}
+
+
+// Choose Icon
+function chooseIcon(value) {
+
+    switch (value) {
+        case 'anti-social-behaviour':
+            return 'emoticon-angry'
+            break;
+        case 'bicycle-theft':
+            return 'bicycle'
+            break;
+        case 'burglary':
+            return 'house'
+            break;
+        case 'criminal-damage-arson':
+            return 'fire'
+            break;
+        case 'drugs':
+            return 'pill'
+            break;
+        case 'possession-of-weapons':
+            return 'knife-military'
+            break;
+        case 'shoplifting':
+            return 'cart'
+            break;
+        case 'vehicle-crime':
+            return 'car'
+            break;
+        default:
+            return 'alert-circle'
+    }
+
 }
