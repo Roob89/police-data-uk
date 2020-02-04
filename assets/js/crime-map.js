@@ -118,7 +118,7 @@ function findCrimes() {
                 var marker = new google.maps.Marker({
                     position: crimeLocation,
                     map: map,
-                    icon: `../icons/${markerIcon}.png`
+                    icon: `assets/icons/${markerIcon}.png`
                 });
 
                 // Set info
