@@ -28,6 +28,10 @@ crimeButton.addEventListener('click', findCrimes);
 // Find crimes button
 function findCrimes() {
 
+    // Set button state
+    crimeButton.innerHTML = 'Loading...';
+
+
     // Find center
     var mapLat = map.center.lat();
     var mapLng = map.center.lng();
@@ -36,9 +40,14 @@ function findCrimes() {
         lng: mapLng
     }
 
+    // Get dates
+    var month = document.getElementById('month').value;
+    var year = document.getElementById('year').value;
+
+    console.log(`Month : ${month} | Year : ${year}`);
+
     // Zoom in
     map.setZoom(13);
-
 
 
     // Polygon
@@ -89,7 +98,7 @@ function findCrimes() {
 
     // API call
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", `https://data.police.uk/api/crimes-street/all-crime?poly=${mapLat-latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng+lngVariable}:${mapLat-latVariable},${mapLng+lngVariable}`, true);
+    xhttp.open("GET", `https://data.police.uk/api/crimes-street/all-crime?poly=${mapLat-latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng+lngVariable}:${mapLat-latVariable},${mapLng+lngVariable}&date=${year}-${month}`, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -99,8 +108,6 @@ function findCrimes() {
             response = this.responseText;
             response = JSON.parse(response);
             document.getElementById('found').innerHTML = `Found ${response.length} crimes`;
-
-            console.log( response );
 
             for (var i = 0; i < response.length; i++) {
 
@@ -118,7 +125,7 @@ function findCrimes() {
                 var marker = new google.maps.Marker({
                     position: crimeLocation,
                     map: map,
-                    icon: `../assets/icons/${markerIcon}.png`
+                    icon: `assets/icons/${markerIcon}.png`
                 });
 
                 // Set info
@@ -145,7 +152,28 @@ function findCrimes() {
 
             }
 
+            crimeButton.innerHTML = 'Find recent crimes';
+
+        } else if(this.readyState == 4 && this.status == 404) {
+
+            // Nothing found
+            document.getElementById('found').innerHTML = `Nothing found`;
+            crimeButton.innerHTML = 'Find recent crimes';
+            
+            
+        } else if(this.readyState == 4 && this.status == 503) {
+            
+            // Too many results
+            document.getElementById('found').innerHTML = `Too many results`;
+            crimeButton.innerHTML = 'Find recent crimes';
+
+
+        } else {
+
+            console.log(`readyState = ${this.readyState} | status = ${this.status}` );
+
         }
+
     };
 
 
