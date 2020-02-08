@@ -42,6 +42,9 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 .grid { display: grid; grid-gap: 1rem; grid-template-columns: repeat(4, auto); }
 .grid--3 { grid-template-columns: repeat(3, auto); }
 
+.flex { display: flex; margin: 1rem -0.5rem; flex-flow: wrap;}
+.flex__col { padding: .5rem 0.5rem; }
+
 .map { padding: 25% 0; }
 
 .button { display: inline-block; background: #1a4080; color: white; font-weight: bold; padding: 1em 2em; line-height: 1; cursor: pointer; text-decoration: none; vertical-align: middle;}
@@ -128,7 +131,12 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 
     /* Common */
     .grid { grid-template-columns: repeat(1, auto); }
+    .flex { display: block; margin 0; }
+    .flex__col { padding: 0; margin: 1rem 0; }
     .map { padding: 50% 0; }
+
+    .input { display: block; }
+    input { width: 100%; }
 
 }
 

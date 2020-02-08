@@ -10,11 +10,17 @@ layout: default
             <h1>Crime Map</h1>
             <p>Click on the button below the map to view all crimes within a 1 mile radius that happened in the last month.</p>
             <p>The street-level crimes returned in the API are only an approximation of where the actual crimes occurred, they are not the exact locations. See the <a href="https://data.police.uk/about/#location-anonymisation" target="_blank" rel="noreferrer nofollow noopener">about page</a> for more information about location anonymisation. If you're searching for locations in Scotland, please be aware that since only the British Transport Police provide data for Scotland, crime levels may appear much lower than they really are.</p>
-            <p>
-                <span id="find-crimes-button" class="button">Find recent crimes</span>
-                <span class="input"><label for="month">Month</label><input id="month" type="number" name="month" value="01" id=""></span>
-                <span class="input"><label for="year">Year</label><input id="year" type="number" name="year" value="2020" id=""></span>
-            </p>
+            <div class="flex">
+                <div class="flex__col">
+                    <span id="find-crimes-button" class="button">Find recent crimes</span>
+                </div>
+                <div class="flex__col">
+                    <span class="input"><label for="month">Month</label><input id="month" type="number" name="month" value="01" id=""></span>
+                </div>
+                <div class="flex__col">
+                    <span class="input"><label for="year">Year</label><input id="year" type="number" name="year" value="2020" id=""></span>
+                </div>
+            </div>
             <p>
                 <span id="found"></span>
             </p>
