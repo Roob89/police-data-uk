@@ -128,6 +128,7 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 
     /* Common */
     .grid { grid-template-columns: repeat(1, auto); }
+    .map { padding: 50% 0; }
 
 }
 
