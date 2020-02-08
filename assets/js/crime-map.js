@@ -28,6 +28,8 @@ crimeButton.addEventListener('click', findCrimes);
 // Find crimes button
 function findCrimes() {
 
+    updateButtonText( 'Loading' );
+
     // Find center
     var mapLat = map.center.lat();
     var mapLng = map.center.lng();
@@ -103,7 +105,8 @@ function findCrimes() {
             // Parse response
             response = this.responseText;
             response = JSON.parse(response);
-            document.getElementById('found').innerHTML = `Found ${response.length} crimes`;
+            updateFoundText( `Found ${response.length} crimes` );
+            
 
             for (var i = 0; i < response.length; i++) {
 
@@ -148,15 +151,25 @@ function findCrimes() {
 
             }
 
+            updateButtonText();
+
+
         } else if(this.readyState == 4 && this.status == 503) {
 
             console.log('Error 503 : Too many results');
-            document.getElementById('found').innerHTML = `Too many results to load`;
+            updateFoundText( `Too many results to load` );
+            updateButtonText( 'Loading' );
 
+        } else if(this.readyState == 4 && this.status == 404) {
+
+            console.log('Error 404');
+            updateFoundText( `Nothing found` );
+            updateButtonText();
 
         } else {
 
             console.log(`State: ${this.readyState} | Status: ${this.status}`);
+
 
         }
     };
@@ -181,6 +194,22 @@ function clearMarkers() {
         console.log('No markers to clear');
     }
 }
+
+
+// Update button text
+function updateButtonText( text ) {
+    if( text ) {
+        crimeButton.innerHTML = text;
+    } else {
+        crimeButton.innerHTML = 'Find recent crimes';
+    }
+}
+
+// Update found text
+function updateFoundText( text ) {
+    document.getElementById('found').innerHTML = text;
+}
+
 
 
 // Choose Icon
