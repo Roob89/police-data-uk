@@ -131,7 +131,7 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 
     /* Common */
     .grid { grid-template-columns: repeat(1, auto); }
-    .flex { display: block; margin 0; }
+    .flex { display: block; margin: 0; }
     .flex__col { padding: 0; margin: 1rem 0; }
     .map { padding: 50% 0; }
 
