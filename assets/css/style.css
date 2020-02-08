@@ -18,6 +18,10 @@ ul { padding-left: 2em; }
 
 input[type='number'] {padding: 0.975em 1em;font-family: inherit;border-radius: 0.2em;border: 1px solid #1a4080;/*! background: whitesmoke; */}
 
+.input {border: 1px solid #1a4080;display: inline-block;border-radius: 0.5em;overflow: hidden;padding: 0.688em 1em;vertical-align: middle;font-size: 1em;}
+.input label {font-weight: bold;color: #1a4080;text-transform: uppercase;font-size: 0.75em;margin-right: 1em;}
+.input input {border: none;padding: 0;font-size: inherit;}
+
 /***************************************************************
 # Common
 ***************************************************************/
@@ -40,7 +44,7 @@ html,body { background: #efefef; font-family: 'Titillium Web', sans-serif; margi
 
 .map { padding: 25% 0; }
 
-.button { display: inline-block; background: #1a4080; color: white; font-weight: bold; padding: 1em 2em; line-height: 1; cursor: pointer; text-decoration: none; }
+.button { display: inline-block; background: #1a4080; color: white; font-weight: bold; padding: 1em 2em; line-height: 1; cursor: pointer; text-decoration: none; vertical-align: middle;}
 
 
 /***************************************************************

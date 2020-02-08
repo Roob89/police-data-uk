@@ -39,6 +39,9 @@ function findCrimes() {
     // Zoom in
     map.setZoom(13);
 
+    // Get dates
+    var month = document.getElementById('month').value;
+    var year = document.getElementById('year').value;
 
 
     // Polygon
@@ -89,7 +92,9 @@ function findCrimes() {
 
     // API call
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", `https://data.police.uk/api/crimes-street/all-crime?poly=${mapLat-latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng+lngVariable}:${mapLat-latVariable},${mapLng+lngVariable}`, true);
+    var url = `https://data.police.uk/api/crimes-street/all-crime?poly=${mapLat-latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng+lngVariable}:${mapLat-latVariable},${mapLng+lngVariable}&date=${year}-${month}`
+    console.log(`API call to : ${url}`);
+    xhttp.open("GET", url, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -99,8 +104,6 @@ function findCrimes() {
             response = this.responseText;
             response = JSON.parse(response);
             document.getElementById('found').innerHTML = `Found ${response.length} crimes`;
-
-            console.log( response );
 
             for (var i = 0; i < response.length; i++) {
 
@@ -144,6 +147,16 @@ function findCrimes() {
                 markers.push(marker);
 
             }
+
+        } else if(this.readyState == 4 && this.status == 503) {
+
+            console.log('Error 503 : Too many results');
+            document.getElementById('found').innerHTML = `Too many results to load`;
+
+
+        } else {
+
+            console.log(`State: ${this.readyState} | Status: ${this.status}`);
 
         }
     };
@@ -197,6 +210,9 @@ function chooseIcon(value) {
             break;
         case 'vehicle-crime':
             return 'car'
+            break;
+        case 'violent-crime':
+            return 'handball'
             break;
         default:
             return 'alert-circle'

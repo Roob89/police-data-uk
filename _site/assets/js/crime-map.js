@@ -28,10 +28,6 @@ crimeButton.addEventListener('click', findCrimes);
 // Find crimes button
 function findCrimes() {
 
-    // Set button state
-    crimeButton.innerHTML = 'Loading...';
-
-
     // Find center
     var mapLat = map.center.lat();
     var mapLng = map.center.lng();
@@ -40,14 +36,12 @@ function findCrimes() {
         lng: mapLng
     }
 
+    // Zoom in
+    map.setZoom(13);
+
     // Get dates
     var month = document.getElementById('month').value;
     var year = document.getElementById('year').value;
-
-    console.log(`Month : ${month} | Year : ${year}`);
-
-    // Zoom in
-    map.setZoom(13);
 
 
     // Polygon
@@ -98,7 +92,9 @@ function findCrimes() {
 
     // API call
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", `https://data.police.uk/api/crimes-street/all-crime?poly=${mapLat-latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng+lngVariable}:${mapLat-latVariable},${mapLng+lngVariable}&date=${year}-${month}`, true);
+    var url = `https://data.police.uk/api/crimes-street/all-crime?poly=${mapLat-latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng-lngVariable}:${mapLat+latVariable},${mapLng+lngVariable}:${mapLat-latVariable},${mapLng+lngVariable}&date=${year}-${month}`
+    console.log(`API call to : ${url}`);
+    xhttp.open("GET", url, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -152,28 +148,17 @@ function findCrimes() {
 
             }
 
-            crimeButton.innerHTML = 'Find recent crimes';
-
-        } else if(this.readyState == 4 && this.status == 404) {
-
-            // Nothing found
-            document.getElementById('found').innerHTML = `Nothing found`;
-            crimeButton.innerHTML = 'Find recent crimes';
-            
-            
         } else if(this.readyState == 4 && this.status == 503) {
-            
-            // Too many results
-            document.getElementById('found').innerHTML = `Too many results`;
-            crimeButton.innerHTML = 'Find recent crimes';
+
+            console.log('Error 503 : Too many results');
+            document.getElementById('found').innerHTML = `Too many results to load`;
 
 
         } else {
 
-            console.log(`readyState = ${this.readyState} | status = ${this.status}` );
+            console.log(`State: ${this.readyState} | Status: ${this.status}`);
 
         }
-
     };
 
 
@@ -225,6 +210,9 @@ function chooseIcon(value) {
             break;
         case 'vehicle-crime':
             return 'car'
+            break;
+        case 'violent-crime':
+            return 'handball'
             break;
         default:
             return 'alert-circle'
